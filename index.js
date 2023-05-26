@@ -95,14 +95,14 @@ app.post('/registration_insert', function (req, res) {
           var obj=null;
           console.log(obj);
           res.send(obj);
-        }  
+        }   
    
    }); });   
  });
  
 
  app.post('/registration_select_one', function (req, res) {  
-     var user=req.body;
+     var user=req.body; 
      var mysql = require('mysql');  
       var con = mysql.createConnection({  
       host: "localhost",  
@@ -147,6 +147,9 @@ app.post('/product_select_by_owner', function (req, res) {
 
 app.post('/product_edit', function (req, res) {  
     var user=req.body; 
+    console.log("dfsdfsdf");
+    console.log( user);
+    
       con.connect(function(err) {    
       console.log("Connected!");  
       con.query(`SELECT * FROM add_prod_table WHERE id=${user.id}`, function (err, result) {  
@@ -178,12 +181,11 @@ app.post('/product_delete', function (req, res) {
 
 app.post('/contactInsert', function (req, res) {  
    var dd=req.body;
-   var date=new Date();
    console.log(dd); 
       con.connect(function(err) {  
       console.log("Contact Connected!");   
       con.query(`INSERT INTO contact_us_table (id, name, email, subject,massage, date) VALUES
-       (NULL, '${dd.name}', '${dd.email}', '${dd.subject}', '${dd.massage}','${date}')`, function (err, result) {    
+       (NULL, '${dd.name}', '${dd.email}', '${dd.subject}', '${dd.massage}','${dd.date}')`, function (err, result) {    
       console.log("1 record inserted");  
       });    
    });  
@@ -208,6 +210,19 @@ app.post('/orderInsert', function (req, res) {
 
 
 
+app.post('/UpdateProd', function (req, res) {  
+   var dd=req.body;
+   console.log(dd); 
+      con.connect(function(err) {  
+      console.log("order Connected!");  
+      var sql=`UPDATE add_prod_table SET prod_name='${dd.prod_name}',prod_quantity='${dd.prod_quantity}',userId='${dd.userId}',prod_img='${dd.prod_img}',prod_dis='${dd.prod_dis}',prod_prise='${dd.prod_prise}',prodType='${dd.prodType}' WHERE id=${dd.id}`; 
+     con.query(sql, function (err, result) {  
+      if (err) throw err;  
+      console.log(result);  
+      });  
+   });  
+});
+
 app.post('/order_list', function (req, res) {  
     var user=req.body; 
       con.connect(function(err) {    
@@ -224,3 +239,24 @@ var server = app.listen(8000, function () {
   var port = server.address().port;  
   console.log('Example app listening at http://%s:%s', host, port);  
 });  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
